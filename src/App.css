@@ -1,0 +1,5 @@
+.background-image {
+    background: url("./assets/bg-waves.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
