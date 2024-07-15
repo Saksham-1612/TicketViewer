@@ -12,7 +12,7 @@ function Ticket({ ticket }) {
             <p className='col-span-3'>{ticket.email}</p>
             <MdMail className='text-xl col-span-1' />
             <Tooltip title={ticket.status} className='col-span-1'>
-                <div className='w-14'>
+                <div className='w-16 text-center'>
                     <p className='bg-red-100 cursor-pointer text-red-400 px-1 rounded-md'>{ticket.status}</p>
                 </div>
             </Tooltip>
@@ -20,7 +20,7 @@ function Ticket({ ticket }) {
                 <p>{ticket.subject}</p>
             </div>
             <Tooltip title="Resolved" className='col-span-1'>
-                <div className='w-10'>
+                <div className='w-14 text-center'>
                     <p className='bg-blue-100 cursor-pointer text-blue-400 px-1 rounded-md'>{ticket.flag}</p>
                 </div>
             </Tooltip>
