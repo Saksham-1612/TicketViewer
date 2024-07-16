@@ -2,25 +2,47 @@ import React, { useEffect, useState } from 'react';
 import Ticket from './Ticket';
 import TopBar from './TopBar';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTickets } from '../redux/slice/ticketSlice';
+import { Skeleton } from '@mui/material';
 
 
 const TicketViewer = () => {
-  const [tickets, setTickets] = useState([])
+  const dispatch = useDispatch()
+  const tickets = useSelector(state => state.tickets)
+  const [loading, setLoading] = useState(false)
 
   const fetchData = async () => {
-    const res = await axios.get("https://ticket-api-production-0c8e.up.railway.app/tickets")
-    console.log(res.data)
-    setTickets(res.data);
+    try {
+      setLoading(true);
+      const res = await axios.get("https://ticket-api-production-0c8e.up.railway.app/tickets")
+      dispatch(setTickets(res.data));
+      // console.log(res.data)
+    } catch (error) {
+      console.error(error);
+    }
+    finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
-    fetchData()
+    if (tickets.length == 0) {
+      fetchData()
+    }
   }, [])
 
   return (
     <div className="container mx-auto ">
       <TopBar />
       <div className="bg-gray-100 rounded p-1 overflow-y-auto overflow-x-hidden h-[90%] flex flex-col items-center">
+        {loading && (
+          <div className='w-full'>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <Skeleton key={index} className='w-full rounded-lg px-4 py-4' />
+            ))}
+          </div>
+        )}
         {tickets.map((ticket, index) => (
           <Ticket ticket={ticket} key={index} />
         ))}

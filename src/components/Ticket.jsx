@@ -3,11 +3,12 @@ import React from 'react'
 import { BiArchive } from 'react-icons/bi'
 import { BsFlagFill } from 'react-icons/bs'
 import { MdMail } from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 
 function Ticket({ ticket }) {
     return (
-        <div className='w-full grid m-1  grid-cols-12   items-center bg-white rounded-lg justify-between px-4'>
+        <Link to={`/ticket/${ticket.id}`} className='w-full grid m-1  grid-cols-12   items-center bg-white rounded-lg justify-between px-4'>
             <Checkbox className='col-span-1' />
             <p className='col-span-3'>{ticket.email}</p>
             <MdMail className='text-xl col-span-1' />
@@ -26,7 +27,7 @@ function Ticket({ ticket }) {
             </Tooltip>
             <BsFlagFill className='text-red-500 col-span-1' />
             <BiArchive className='text-lg col-span-1' />
-        </div>
+        </Link>
     )
 }
 
