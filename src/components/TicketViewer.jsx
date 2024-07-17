@@ -9,8 +9,10 @@ import { Skeleton } from '@mui/material';
 
 const TicketViewer = () => {
   const dispatch = useDispatch()
-  const tickets = useSelector(state => state.tickets)
+  const tickets = useSelector(state => state.tickets.tickets)
   const [loading, setLoading] = useState(false)
+  const view = useSelector(state => state.view.view)
+  const search = useSelector(state => state.search.search)
 
   const fetchData = async () => {
     try {
@@ -30,7 +32,13 @@ const TicketViewer = () => {
     if (tickets.length == 0) {
       fetchData()
     }
+
   }, [])
+
+  const filteredTickets = tickets.filter(ticket =>
+    ticket.subject.toLowerCase().includes(search.toLowerCase()) &&
+    (view === "All" || ticket.view === view)
+  );
 
   return (
     <div className="container mx-auto ">
@@ -38,12 +46,12 @@ const TicketViewer = () => {
       <div className="bg-gray-100 rounded p-1 overflow-y-auto overflow-x-hidden h-[90%] flex flex-col items-center">
         {loading && (
           <div className='w-full'>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 20 }).map((_, index) => (
               <Skeleton key={index} className='w-full rounded-lg px-4 py-4' />
             ))}
           </div>
         )}
-        {tickets.map((ticket, index) => (
+        {filteredTickets?.map((ticket, index) => (
           <Ticket ticket={ticket} key={index} />
         ))}
       </div>

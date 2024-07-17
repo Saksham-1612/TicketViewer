@@ -11,9 +11,16 @@ const ticketSlice = createSlice({
         setTickets: (state, action) => {
             state.tickets = action.payload
         },
+        addTicket: (state, action) => {
+            state.tickets.push(action.payload);
+        },
+        removeTicket: (state, action) => {
+            state.tickets = state.tickets.filter(ticket => ticket.id !== action.payload.id);
+        },
+
     },
 });
 
-export const { setTickets } = ticketSlice.actions
+export const { setTickets, addTicket, removeTicket } = ticketSlice.actions
 
 export default ticketSlice.reducer

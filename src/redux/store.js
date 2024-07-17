@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import ticketReducer from './slice/ticketSlice'
+import allReducers from './reducer'
 
 export const store = configureStore({
-    reducer: ticketReducer,
+    reducer: allReducers,
 })

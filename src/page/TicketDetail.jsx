@@ -1,13 +1,16 @@
 import React from 'react';
+import { BiCalendar } from 'react-icons/bi';
+import { MdEmail, MdFlag } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { MdEmail, MdFlag } from 'react-icons/md';
-import { BiCalendar } from 'react-icons/bi';
+
 
 function TicketDetail() {
-    const tickets = useSelector(state => state.tickets);
+    const tickets = useSelector(state => state.tickets.tickets);
     const { id } = useParams();
     const ticket = tickets.find(t => t.id == id);
+
+
 
     if (!ticket) {
         return <div className="h-screen flex justify-center items-center">Ticket not found</div>;
