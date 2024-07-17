@@ -15,7 +15,7 @@ const ticketSlice = createSlice({
             state.tickets.push(action.payload);
         },
         removeTicket: (state, action) => {
-            state.tickets = state.tickets.filter(ticket => ticket.id !== action.payload.id);
+            state.tickets = state.tickets.filter(ticket => ticket.id !== action.payload);
         },
 
     },

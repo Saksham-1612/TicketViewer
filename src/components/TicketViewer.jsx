@@ -19,7 +19,7 @@ const TicketViewer = () => {
       setLoading(true);
       const res = await axios.get("https://ticket-api-production-0c8e.up.railway.app/tickets")
       dispatch(setTickets(res.data));
-      // console.log(res.data)
+      console.log(res.data)
     } catch (error) {
       console.error(error);
     }

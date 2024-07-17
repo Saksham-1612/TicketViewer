@@ -2,16 +2,21 @@ import { Checkbox, Tooltip } from '@mui/material'
 import React, { useState } from 'react'
 import { BiArchive } from 'react-icons/bi'
 import { BsFlagFill } from 'react-icons/bs'
-import { MdMail } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { MdDelete, MdMail } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { truncateEmail } from '../utils/utils'
+import { removeTicket } from '../redux/slice/ticketSlice'
 
 
 function Ticket({ ticket }) {
     const [checked, setChecked] = useState(false)
+    const dispatch = useDispatch()
     const handleCheck = () => {
         setChecked(!checked)
+    }
+    const handleDelete = () => {
+        dispatch(removeTicket(ticket.id))
     }
     const allChecked = useSelector(state => state.check.allchecked)
     return (
@@ -24,7 +29,7 @@ function Ticket({ ticket }) {
                     <p className='bg-red-100 cursor-pointer text-red-400 px-1 rounded-md'>{ticket.status}</p>
                 </div>
             </Tooltip>
-            <div className='col-span-3'>
+            <div className='col-span-2'>
                 <p>{ticket.subject}</p>
             </div>
             <Tooltip title="Resolved" className='col-span-1'>
@@ -36,6 +41,7 @@ function Ticket({ ticket }) {
             <Link to={`/ticket/${ticket.id}`}>
                 <BiArchive className='text-lg col-span-1' />
             </Link>
+            <MdDelete className='col-span-1 cursor-pointer' onClick={handleDelete} />
         </div>
     )
 }

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { PiFoldersFill } from "react-icons/pi";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { Modal, Button, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setView } from '../redux/slice/viewSlice';
+import NewTicketModal from './NewTicketModal';
 
 function SideBar() {
-    const selectedView = useSelector(state => state.view.view)
-    const dispatch = useDispatch()
+    const selectedView = useSelector(state => state.view.view);
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
 
     const views = [
@@ -22,7 +22,7 @@ function SideBar() {
     ];
 
     const handleClick = (view) => {
-        dispatch(setView(view))
+        dispatch(setView(view));
     };
 
     const handleOpen = () => setOpen(true);
@@ -54,25 +54,7 @@ function SideBar() {
                 </div>
             </div>
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-title"
-                aria-describedby="modal-description"
-                className="flex justify-center items-center"
-            >
-                <div className="bg-white rounded-lg p-6 w-96 shadow-lg">
-                    <Typography id="modal-title" variant="h6" component="h2" className="font-semibold">
-                        Add New View
-                    </Typography>
-                    <Typography id="modal-description" className="mt-2">
-                        Here you can add a new view.
-                    </Typography>
-                    <Button onClick={handleClose} variant="contained" className="mt-4 bg-blue-500 hover:bg-blue-700">
-                        Close
-                    </Button>
-                </div>
-            </Modal>
+            <NewTicketModal open={open} handleClose={handleClose} />
         </div>
     );
 }
