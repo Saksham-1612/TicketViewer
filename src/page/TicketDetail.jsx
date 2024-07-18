@@ -1,16 +1,18 @@
 import React from 'react';
 import { BiCalendar } from 'react-icons/bi';
 import { MdEmail, MdFlag } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import useTicketDetails from '../hooks/UseTicketDetails';
+import { BsArrowLeft } from 'react-icons/bs';
 
 
 function TicketDetail() {
-    const tickets = useSelector(state => state.tickets.tickets);
-    const { id } = useParams();
-    const ticket = tickets.find(t => t.id == id);
+    const ticket = useTicketDetails();
+    const navigate = useNavigate();
 
-
+    const goBack = () => {
+        navigate("/dashboard");
+    };
 
     if (!ticket) {
         return <div className="h-screen flex justify-center items-center">Ticket not found</div>;
@@ -21,6 +23,12 @@ function TicketDetail() {
     return (
         <div className="h-screen flex justify-center items-center bg-gray-100">
             <div className="max-w-3xl w-full bg-white p-6 rounded-lg shadow-md">
+                <div
+                    className="bg-gray-200 w-fit hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    onClick={goBack}
+                >
+                    <BsArrowLeft />
+                </div>
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-semibold">{subject}</h2>
                     <span className="px-2 py-1 bg-blue-100 text-blue-600 rounded-md">{status}</span>
@@ -38,6 +46,7 @@ function TicketDetail() {
                     <span className="text-red-500">{flag}</span>
                 </div>
                 <hr className="my-4" />
+
             </div>
         </div>
     );

@@ -1,39 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Ticket from './Ticket';
 import TopBar from './TopBar';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTickets } from '../redux/slice/ticketSlice';
+import { fetchTickets } from '../redux/slice/ticketSlice';
 import { Skeleton } from '@mui/material';
 
-
 const TicketViewer = () => {
-  const dispatch = useDispatch()
-  const tickets = useSelector(state => state.tickets.tickets)
-  const [loading, setLoading] = useState(false)
-  const view = useSelector(state => state.view.view)
-  const search = useSelector(state => state.search.search)
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get("https://ticket-api-production-0c8e.up.railway.app/tickets")
-      dispatch(setTickets(res.data));
-      console.log(res.data)
-    } catch (error) {
-      console.error(error);
-    }
-    finally {
-      setLoading(false);
-    }
-  }
+  const dispatch = useDispatch();
+  const tickets = useSelector(state => state.tickets.tickets);
+  const loading = useSelector(state => state.tickets.loading);
+  const view = useSelector(state => state.view.view);
+  const search = useSelector(state => state.search.search);
 
   useEffect(() => {
-    if (tickets.length == 0) {
-      fetchData()
-    }
-
-  }, [])
+    if (tickets.length == 0)
+      dispatch(fetchTickets());
+  }, [dispatch]);
 
   const filteredTickets = tickets.filter(ticket =>
     ticket.subject.toLowerCase().includes(search.toLowerCase()) &&
@@ -41,7 +23,7 @@ const TicketViewer = () => {
   );
 
   return (
-    <div className="container mx-auto ">
+    <div className="container mx-auto">
       <TopBar />
       <div className="bg-gray-100 rounded p-1 overflow-y-auto overflow-x-hidden h-[90%] flex flex-col items-center">
         {loading && (
@@ -51,11 +33,11 @@ const TicketViewer = () => {
             ))}
           </div>
         )}
-        {filteredTickets?.map((ticket, index) => (
+        {filteredTickets.map((ticket, index) => (
           <Ticket ticket={ticket} key={index} />
         ))}
       </div>
-    </div >
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTickets } from '../redux/slice/ticketSlice';
+import { addTicket } from '../redux/slice/ticketSlice';
 
 function NewTicketModal({ open, handleClose }) {
     const dispatch = useDispatch();
@@ -28,8 +28,8 @@ function NewTicketModal({ open, handleClose }) {
 
     const handleSubmit = () => {
         const newTicket = { ...newTicketData, id: generateRandomId() };
-        const updatedTickets = [...ticketPresents, newTicket];
-        dispatch(setTickets(updatedTickets));
+        // const updatedTickets = [...ticketPresents, newTicket];
+        dispatch(addTicket(newTicket));
         handleClose();
     };
 
