@@ -21,11 +21,15 @@ const LoginForm = () => {
 
     const handleSubmit = (values, { setSubmitting }) => {
         console.log('Form data', values);
-        setSubmitting(false);
 
-        setTimeout(() => {
-            navigate("/dashboard");
-        }, 500);
+        if (values.email == "saksham16dec@gmail.com" && values.password == "12345678") {
+            localStorage.setItem("token", "saksham16dec@gmail.com");
+            setSubmitting(false);
+
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 500);
+        }
     };
 
     return (
