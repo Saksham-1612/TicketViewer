@@ -11,7 +11,7 @@ export const fetchTickets = createAsyncThunk(
     'tickets/fetchTickets',
     async () => {
         try {
-            const response = await axios.get("https://ticket-springboot-production.up.railway.app/tickets/");
+            const response = await axios.get("http://localhost:8080/tickets/");
             return response.data;
         } catch (error) {
             console.error('Error fetching tickets:', error);
@@ -24,8 +24,8 @@ export const addTicket = createAsyncThunk(
     'tickets/addTicket',
     async (newTicket) => {
         try {
-            console.log(newTicket);
-            const response = await axios.post("https://ticket-springboot-production.up.railway.app/tickets/add", newTicket);
+            // console.log(newTicket);
+            const response = await axios.post("http://localhost:8080/tickets/add", newTicket);
             return response.data;
         } catch (error) {
             console.error('Error adding ticket:', error);
@@ -38,7 +38,7 @@ export const removeTicket = createAsyncThunk(
     'tickets/removeTicket',
     async (ticketId) => {
         try {
-            await axios.delete(`https://ticket-springboot-production.up.railway.app/tickets/remove/${ticketId}`);
+            await axios.delete(`http://localhost:8080/tickets/remove/${ticketId}`);
             return ticketId;
         } catch (error) {
             console.error('Error removing ticket:', error);

@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiCalendar } from 'react-icons/bi';
 import { MdEmail, MdFlag } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useTicketDetails from '../hooks/UseTicketDetails';
 import { BsArrowLeft } from 'react-icons/bs';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTickets } from '../redux/slice/ticketSlice';
 
 function TicketDetail() {
+    const { id } = useParams();
     const ticket = useTicketDetails();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(!ticket);
+    const tickets = useSelector(state => state.tickets.tickets);
+
+    useEffect(() => {
+        if (!ticket) {
+            dispatch(fetchTickets()).then(() => {
+                setLoading(false);
+            });
+        }
+    }, [dispatch, ticket]);
 
     const goBack = () => {
         navigate("/dashboard");
     };
+
+    if (loading) {
+        return <div className="h-screen flex justify-center items-center">Loading...</div>;
+    }
 
     if (!ticket) {
         return <div className="h-screen flex justify-center items-center">Ticket not found</div>;
@@ -46,7 +63,6 @@ function TicketDetail() {
                     <span className="text-red-500">{flag}</span>
                 </div>
                 <hr className="my-4" />
-
             </div>
         </div>
     );
