@@ -2,12 +2,12 @@ import { combineReducers } from "@reduxjs/toolkit"
 import checkReducer from "./slice/checkSlice"
 import ticketReducer from "./slice/ticketSlice"
 import searchReducer from "./slice/searchSlice"
-import viewReducer from "./slice/viewSlice"
+import statusReducer from "./slice/statusSlice"
 
 const allReducers = combineReducers({
     check: checkReducer,
     tickets: ticketReducer,
     search: searchReducer,
-    view: viewReducer
+    status: statusReducer
 })
 export default allReducers

@@ -9,8 +9,10 @@ const TicketViewer = () => {
   const dispatch = useDispatch();
   const tickets = useSelector(state => state.tickets.tickets);
   const loading = useSelector(state => state.tickets.loading);
-  const view = useSelector(state => state.view.view);
+  const status = useSelector(state => state.status.status);
   const search = useSelector(state => state.search.search);
+
+  // console.log(status);
 
   useEffect(() => {
     if (tickets.length == 0)
@@ -19,8 +21,9 @@ const TicketViewer = () => {
 
   const filteredTickets = tickets.filter(ticket =>
     ticket.subject.toLowerCase().includes(search.toLowerCase()) &&
-    (view === "All" || ticket.view === view)
+    (status === "All" || ticket.status === status)
   );
+  // console.log(filteredTickets);
 
   return (
     <div className="container mx-auto">

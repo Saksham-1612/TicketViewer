@@ -1,6 +1,6 @@
 import { Checkbox, Tooltip, Snackbar } from '@mui/material'
 import React, { useState } from 'react'
-import { BiArchive } from 'react-icons/bi'
+import { BiArchive, BiInfoCircle } from 'react-icons/bi'
 import { BsFlagFill } from 'react-icons/bs'
 import { MdDelete, MdMail } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
@@ -30,9 +30,9 @@ function Ticket({ ticket }) {
                 <Checkbox className='col-span-1' checked={checked || allChecked} onChange={handleCheck} />
                 <p className='col-span-3'>{truncateEmail(ticket.email)}</p>
                 <MdMail className='text-xl col-span-1' />
-                <Tooltip title={ticket.status} className='col-span-1'>
+                <Tooltip title={"INBOX"} className='col-span-1'>
                     <div className='w-16 text-center'>
-                        <p className='bg-red-100 cursor-pointer text-red-400 px-1 rounded-md'>{ticket.status}</p>
+                        <p className='bg-red-100 cursor-pointer text-red-400 px-1 rounded-md'>{"INBOX"}</p>
                     </div>
                 </Tooltip>
                 <div className='col-span-2'>
@@ -45,7 +45,7 @@ function Ticket({ ticket }) {
                 </Tooltip>
                 <BsFlagFill className='text-red-500 col-span-1' />
                 <Link to={`/ticket/${ticket.id}`}>
-                    <BiArchive className='text-lg col-span-1' />
+                    <BiInfoCircle className='text-lg col-span-1' />
                 </Link>
                 <MdDelete className='col-span-1 cursor-pointer' onClick={handleDelete} />
             </div>

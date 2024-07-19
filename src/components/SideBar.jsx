@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { PiFoldersFill } from "react-icons/pi";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { useDispatch, useSelector } from 'react-redux';
-import { setView } from '../redux/slice/viewSlice';
+import { setStatus } from '../redux/slice/statusSlice';
 import NewTicketModal from './NewTicketModal';
 
 function SideBar() {
-    const selectedView = useSelector(state => state.view.view);
+    const selectedStatus = useSelector(state => state.status.status);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
 
-    const views = [
+    const allStatus = [
         "All",
         "Unassigned",
         "All Pending",
@@ -21,8 +21,8 @@ function SideBar() {
         "Completed by me"
     ];
 
-    const handleClick = (view) => {
-        dispatch(setView(view));
+    const handleClick = (status) => {
+        dispatch(setStatus(status));
     };
 
     const handleOpen = () => setOpen(true);
@@ -39,13 +39,13 @@ function SideBar() {
                     </div>
                 </div>
                 <ul className='border-b-2 p-2'>
-                    {views.map((view) => (
+                    {allStatus.map((status) => (
                         <li
-                            key={view}
-                            className={`m-1 p-2 cursor-pointer rounded-md ${selectedView === view ? 'bg-blue-200 transition-all font-semibold' : 'hover:bg-gray-100'}`}
-                            onClick={() => handleClick(view)}
+                            key={status}
+                            className={`m-1 p-2 cursor-pointer rounded-md ${selectedStatus === status ? 'bg-blue-200 transition-all font-semibold' : 'hover:bg-gray-100'}`}
+                            onClick={() => handleClick(status)}
                         >
-                            {view}
+                            {status}
                         </li>
                     ))}
                 </ul>

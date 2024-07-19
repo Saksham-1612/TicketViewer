@@ -5,18 +5,25 @@ import { addTicket } from '../redux/slice/ticketSlice';
 
 function NewTicketModal({ open, handleClose }) {
     const dispatch = useDispatch();
-    const ticketPresents = useSelector(state => state.tickets.tickets);
+
+    const allStatus = [
+        "All",
+        "Unassigned",
+        "All Pending",
+        "All Complete",
+        "All Junk",
+        "Assigned to me",
+        "Created by me",
+        "Completed by me"
+    ];
 
     const [newTicketData, setNewTicketData] = useState({
-        id: '',
         email: '',
         subject: '',
         flag: 'NEW',
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        view: 'All Pending'
+        status: 'All'
     });
-
-    const generateRandomId = () => Math.floor(Math.random() * 1000000);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,8 +34,7 @@ function NewTicketModal({ open, handleClose }) {
     };
 
     const handleSubmit = () => {
-        const newTicket = { ...newTicketData, id: generateRandomId() };
-        // const updatedTickets = [...ticketPresents, newTicket];
+        const newTicket = newTicketData;
         dispatch(addTicket(newTicket));
         handleClose();
     };
@@ -49,6 +55,7 @@ function NewTicketModal({ open, handleClose }) {
                     variant="outlined"
                     value={newTicketData.email}
                     onChange={handleChange}
+                    fullWidth
                 />
                 <TextField
                     size='small'
@@ -57,8 +64,9 @@ function NewTicketModal({ open, handleClose }) {
                     variant="outlined"
                     value={newTicketData.subject}
                     onChange={handleChange}
+                    fullWidth
                 />
-                <FormControl variant="outlined" size="small">
+                <FormControl variant="outlined" size="small" fullWidth>
                     <InputLabel>Flag</InputLabel>
                     <Select
                         name="flag"
@@ -70,10 +78,25 @@ function NewTicketModal({ open, handleClose }) {
                         <MenuItem value="READ">READ</MenuItem>
                     </Select>
                 </FormControl>
-                <Button onClick={handleSubmit} variant="contained" className="mt-4 bg-blue-500 hover:bg-blue-700">
+                <FormControl variant="outlined" size="small" fullWidth>
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                        name="status"
+                        value={newTicketData.status}
+                        onChange={handleChange}
+                        label="Status"
+                    >
+                        {allStatus.map(status => (
+                            <MenuItem key={status} value={status}>
+                                {status}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <Button onClick={handleSubmit} variant="contained" className="mt-4 bg-blue-500 hover:bg-blue-700" fullWidth>
                     Submit
                 </Button>
-                <Button onClick={handleClose} variant="contained" className="mt-4 bg-blue-500 hover:bg-blue-700">
+                <Button onClick={handleClose} variant="contained" className="mt-4 bg-blue-500 hover:bg-blue-700" fullWidth>
                     Close
                 </Button>
             </div>
